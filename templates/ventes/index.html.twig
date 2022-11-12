@@ -1,41 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Ventes{% endblock %}
 
 {% block body %}
+
 <div class="container-fluid col-10">
     <div class="row text-center">
-        <h1>Bienvenue sur cars 2022</h1>
+        <h1>Nos voitures en ventes</h1>
     </div>
 
 
     
     {# for marque #}
     <div class="row">
-    {% for marque in marques %}
+   
     
             <div class="col-md-3">
                 <div class="card bg-dark mb-3">
                     <div class="card-header text-center">
-                        <strong>{{marque.nom}}</strong> 
+                        <strong>...</strong> 
                     </div>
-                    <img src="{{marque.cover}}" class="rounded mx-auto d-block" width="200" height="200" alt="Image de la marque" class="starsimg">
+                    <img src="#" class="rounded mx-auto d-block" width="200" height="200" alt="Image de l'voiture" class="starsimg">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            Notre gamme {{marque.nom}}
+                            modele : <strong>....</strong>
                         </div>
                         <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, earum modi! Dolorem at exercitationem sapiente optio aliquam blanditiis.
+                            <p>KM : ... </p>
+                            <p>Puissance : ...</p>
+                            <p>carburant : ...</p>
+                            <p>Année : ...</p>
+                            <p>Prix : ...</p>
                         </p>
                         <div class="text-center">
-                        <a href="#" class="btn btn-secondary">Découvrire les voitures</a>
+                        <a href="#" class="btn btn-secondary">Découvrire la voiture</a>
                         </div>
                     </div>
                 </div>
             </div>  
         
      
-    {% endfor %}
+    
     </div>
     
         
@@ -43,4 +48,5 @@
 
         
 </div>            
+
 {% endblock %}
