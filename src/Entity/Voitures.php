@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use App\Entity\Marques;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Voitures
 {
     #[ORM\Id]
@@ -23,6 +26,9 @@ class Voitures
 
     #[ORM\Column(length: 120)]
     private ?string $modele = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     #[ORM\Column]
     private ?int $km = null;
@@ -62,6 +68,18 @@ class Voitures
         $this->images = new ArrayCollection();
     }
 
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeSlug() :void
+    {
+        if(empty($this->slug))
+        {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->modele);
+        }
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +105,18 @@ class Voitures
     public function setModele(string $modele): self
     {
         $this->modele = $modele;
+
+        return $this;
+    }
+    
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

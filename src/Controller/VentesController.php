@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Voitures;
 use App\Repository\VoituresRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,21 @@ class VentesController extends AbstractController
     {
         $voiture = $paginator->paginate(
             $repo->findAll(),
-            $request->query->getInt('page',1),12
+            $request->query->getInt('page',1),15
         );
 
         return $this->render('ventes/index.html.twig', [
-            
+
             'voiture' => $voiture,
+        ]);
+    }
+    #[Route('/ventes/{slug}', name:'ventes_show')]
+    public function show(string $slug, Voitures $voiture):Response
+    {
+        // dump($ad);
+
+        return $this->render('ventes/show.html.twig',[
+            'voiture' => $voiture
         ]);
     }
 }

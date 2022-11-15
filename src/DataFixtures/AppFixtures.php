@@ -51,8 +51,8 @@ class AppFixtures extends Fixture
                         ->setAnneeCirculation($faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now'))
                         ->setTransmission("arrière")
                         ->setNbProprio(rand(1,5))
-                        ->setDescription('<p>'.join( $faker->paragraphs(1)).'</p>')
-                        ->setOptionCar('<p>'.join( $faker->words(5)).'</p>')
+                        ->setDescription(join( $faker->paragraphs(1)))
+                        ->setOptionCar(join( $faker->words(5)))
                         ->setIdMarque($marque);
                 $manager->persist($voiture); 
             }
