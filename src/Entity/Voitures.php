@@ -6,6 +6,7 @@ use App\Repository\VoituresRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\Marques;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
@@ -15,7 +16,7 @@ class Voitures
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
     #[ORM\ManyToOne(inversedBy: 'voitures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?marques $marque = null;

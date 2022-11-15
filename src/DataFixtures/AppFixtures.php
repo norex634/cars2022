@@ -7,7 +7,6 @@ use App\Entity\Marques;
 use App\Entity\Voitures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\Mapping\Id;
 
 class AppFixtures extends Fixture
 {
@@ -53,7 +52,7 @@ class AppFixtures extends Fixture
                         ->setTransmission("arrière")
                         ->setNbProprio(rand(1,5))
                         ->setDescription('<p>'.join( $faker->paragraphs(1)).'</p>')
-                        ->setOptionCar('<p>'.join( $faker->paragraphs(1)).'</p>')
+                        ->setOptionCar('<p>'.join( $faker->words(5)).'</p>')
                         ->setIdMarque($marque);
                 $manager->persist($voiture); 
             }

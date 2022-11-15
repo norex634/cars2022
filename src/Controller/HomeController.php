@@ -13,6 +13,7 @@ class HomeController extends AbstractController
     public function index(MarquesRepository $repo): Response
     {
         $marque = $repo->findAll();
+        
 
         return $this->render('home/index.html.twig', [
             'marques' => $marque,
