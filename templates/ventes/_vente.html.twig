@@ -1,17 +1,18 @@
 {% set url = path("ventes_show",{'slug':voiture.slug}) %}
 <div class="col-md-3 text-white">
                 <div class="card bg-dark mb-3">
-                    <div class="card-header text-center bg-dark">
-
-
-                            {{voiture.idMarque.nom}}
-
-                        <strong> </strong> 
+                    <div class="card-header text-center">
+                   
+                        
+                        <h3>{{voiture.Marque.nom}}</h3>
+                            
+                    
+                        
                     </div>
-                    <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block" width="200" height="200" alt="Image de l'voiture" class="starsimg">
+                    <img src="images/coverimg/{{voiture.coverImg}}" class="rounded mx-auto d-block" width="350" height="200" alt="Image de l'voiture" class="starsimg">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            modele : <strong>{{voiture.modele}}</strong>
+                            modele : <h4>{{voiture.modele}}</h4>
                         </div>
                         <p class="card-text">
                             <p>KM :{{voiture.km}}</p>

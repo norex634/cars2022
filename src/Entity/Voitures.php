@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use App\Repository\VoituresRepository;
+use App\Entity\Marques;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use App\Entity\Marques;
-use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -21,14 +21,15 @@ class Voitures
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?marques $marque = null;
+    private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
+    #[Assert\Length(min: 1, max: 120, minMessage: "Le titre doit faire plus de 1 caractère", maxMessage:"Le titre ne doit pas faire plus de 120 caractères")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
 
     #[ORM\Column]
     private ?int $km = null;
@@ -60,8 +61,11 @@ class Voitures
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $option_car = null;
 
-    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'voitures', targetEntity: Images::class, cascade:['persist'])]
     private Collection $images;
+
+    #[ORM\Column(length: 255)]
+    private ?string $coverImg = null;
 
     public function __construct()
     {
@@ -75,22 +79,21 @@ class Voitures
         if(empty($this->slug))
         {
             $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->modele);
+            $this->slug = $slugify->slugify($this->modele.'-'.rand(2000,8000000));
         }
     }
-
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdMarque(): ?marques
+    public function getMarque(): ?Marques
     {
         return $this->marque;
     }
 
-    public function setIdMarque(?marques $marque): self
+    public function setMarque(?Marques $marque): self
     {
         $this->marque = $marque;
 
@@ -108,7 +111,6 @@ class Voitures
 
         return $this;
     }
-    
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -120,7 +122,6 @@ class Voitures
 
         return $this;
     }
-
     public function getKm(): ?int
     {
         return $this->km;
@@ -253,7 +254,7 @@ class Voitures
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
-            $image->setVoiture($this);
+            $image->setVoitures($this);
         }
 
         return $this;
@@ -263,10 +264,22 @@ class Voitures
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getVoiture() === $this) {
-                $image->setVoiture(null);
+            if ($image->getVoitures() === $this) {
+                $image->setVoitures(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCoverImg(): ?string
+    {
+        return $this->coverImg;
+    }
+
+    public function setCoverImg(string $coverImg): self
+    {
+        $this->coverImg = $coverImg;
 
         return $this;
     }

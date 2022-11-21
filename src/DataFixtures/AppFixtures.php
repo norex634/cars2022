@@ -4,17 +4,33 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Marques;
+use App\Entity\User;
 use App\Entity\Voitures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
-{
+{   
+    // gestion du hasher de password
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
 
     public function load(ObjectManager $manager): void
     {
 
         $faker = Factory::create('fr_FR');
+
+        //création d'un admin 
+        $admin = new User();
+        $admin->setEmail('admin@epse.be')
+              ->setRoles(['ROLE_ADMIN'])
+              ->setPassword($this->passwordHasher->hashPassword($admin,'password'));
+        $manager->persist($admin);
         
             /**
              * Data db model
@@ -23,7 +39,7 @@ class AppFixtures extends Fixture
                 'audi' , 'BMW', 'Alfa Romeo', 'Fiat', 'Toyota', 'Seat', 'Volkswagen', 'Mercedes-Benz'
             );
             $marqueCover = array(
-                'images/L_Audi.png', 'images/L_BMW.png', 'images/L_Alfa Romeo.png', 'images/L_Fiat.png', 'images/L_Toyota.png', 'images/L_Seat.png', 'images/L_Volkswagen.png', 'images/L_Mercedes-Benz.png',
+                'images/marqueimg/L_Audi.png', 'images/marqueimg/L_BMW.png', 'images/marqueimg/L_Alfa Romeo.png', 'images/marqueimg/L_Fiat.png', 'images/marqueimg/L_Toyota.png', 'images/marqueimg/L_Seat.png', 'images/marqueimg/L_Volkswagen.png', 'images/marqueimg/L_Mercedes-Benz.png',
             );
         
         /**
@@ -53,7 +69,8 @@ class AppFixtures extends Fixture
                         ->setNbProprio(rand(1,5))
                         ->setDescription(join( $faker->paragraphs(1)))
                         ->setOptionCar(join( $faker->words(5)))
-                        ->setIdMarque($marque);
+                        ->setMarque($marque)
+                        ->setCoverImg('cover.png');
                 $manager->persist($voiture); 
             }
 

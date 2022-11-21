@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid col-10 text-black text-center mt-3 ">
+
+    <div class="container-fluid col-10 text-black text-center ">
         <div class="card mb-3 text-center bg-dark">
-  <h3 class="card-header text-black text-center bg-dark">{{voiture.modele}}</h3>
+  <h3 class="card-header text-white text-center ">{{voiture.modele}}</h3>
   <div class="card-body">
     <h4 class="card-subtitle text-muted">Détail de la voiture</h4>
   </div>
-    <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block mb-3" width="50%" height="400" alt="">
+          
+    <img src="../images/coverimg/{{voiture.coverImg}}" class="rounded mx-auto d-block" width="60%" height="600" alt="">
+        
  
-  <ul class="list-group list-group-flush bg-dark">
-    <li class="list-group-item bg-dark">Marque : {{voiture.idMarque.nom}}</li>
+  <ul class="list-group list-group-flush ">
+    <li class="list-group-item bg-dark">Marque : {{voiture.Marque.nom}}</li>
     <li class="list-group-item bg-dark">Modele : {{voiture.modele}}</li>
     <li class="list-group-item bg-dark">Kilomètrage: {{voiture.km}} km</li>
+    <li class="list-group-item bg-dark">Prix : {{voiture.prix}} €</li>
     <li class="list-group-item bg-dark">Cylindrée : {{voiture.cylindree}} l</li>
     <li class="list-group-item bg-dark">Puissance : {{voiture.puissance}} Ch</li>
     <li class="list-group-item bg-dark">Carburant : {{voiture.carburant}}</li>
@@ -20,15 +24,56 @@
     <li class="list-group-item bg-dark">Nombre de propriétaires: {{voiture.nbProprio}}</li>
     <li class="list-group-item bg-dark">Description : {{voiture.description}}</li>
     <li class="list-group-item bg-dark">Options : {{voiture.optionCar}}</li>
-    <li class="list-group-item bg-dark">Prix : <strong>{{voiture.prix}} €</strong></li>
-
+    
   </ul>
+  <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-3 mt-3 ">
+               
 
+                <div class="bd-example">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-indicators">
+                         {% for images in voiture.Images %}
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{loop.index0}}" {% if loop.first %} class="active" aria-current="true" {% endif %} aria-label="Slide {{loop.index}}"></button>
+                        {% endfor %} 
+                           
+                        </div>
+                        <div class="carousel-inner">
+                            {% for images in voiture.images %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{images.linkImg}}" class="d-block w-100" alt="image de {{voiture.modele}}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                         <h5>{{voiture.modele}}</h5>
+                                        
+                                    </div>
+                                </div>
+                            {% endfor %}
+                           
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+  
   <div class="card-footer text-muted bg-dark">
     {{random(1,20)}} days ago
   </div>
 </div>
 <div class="card">
+<div class="card-body bg-dark">
+    <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="card-link">Modifier la voiture</a>
+    <a href="{{path('voiture_delete',{'slug': voiture.slug})}}" class="card-link">Supprimer la voiture</a>
+  </div>
   <div class="card-body bg-dark">
     <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
     <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
@@ -36,5 +81,10 @@
 </div>
     </div>
 
+{% block javascripts %}
 
+    <script>
+        console.log('test enfant')
+    </script>
+{% endblock %}
 {% endblock %}
