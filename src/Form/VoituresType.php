@@ -39,9 +39,11 @@ class VoituresType extends ApplicationType
             ->add('prix',NumberType::class , $this->getConfiguration("Prix de la voiture","ex:9546,99"))
             ->add('cylindree', ChoiceType::class, [
                 'choices' => [
-                    '1.6' =>'1.6',
-                    '1.8' => '1.8',
-                    '2.6' => '2.6',
+                    '1.3' =>1.3,
+                    '1.6' =>1.6,
+                    '1.8' =>1.8,
+                    '2.3' => 2.3,
+                    '2.6' => 2.6,
                 ],
                 "attr" => [
                     'class' => 'form-control',

@@ -146,12 +146,12 @@ class Voitures
         return $this;
     }
 
-    public function getCylindree(): ?int
+    public function getCylindree(): ?float
     {
         return $this->cylindree;
     }
 
-    public function setCylindree(int $cylindree): self
+    public function setCylindree(float $cylindree): self
     {
         $this->cylindree = $cylindree;
 
