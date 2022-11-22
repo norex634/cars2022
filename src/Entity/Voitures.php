@@ -24,7 +24,7 @@ class Voitures
     private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
-    #[Assert\Length(min: 1, max: 120, minMessage: "Le titre doit faire plus de 1 caractère", maxMessage:"Le titre ne doit pas faire plus de 120 caractères")]
+    #[Assert\Length(min: 10, max: 120, minMessage: "Le titre doit faire plus de 10 caractère", maxMessage:"Le titre ne doit pas faire plus de 120 caractères")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 255)]
